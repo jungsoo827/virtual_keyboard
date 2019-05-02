@@ -75,17 +75,20 @@ const List<List> _keyRowsNumeric = [
     '4',
     '5',
     '6',
+    '-'
   ],
   // Row 1
   const [
     '7',
     '8',
     '9',
+    '+'
   ],
   // Row 1
   const [
-    '.',
+    '000',
     '0',
+    '00',
   ],
 ];
 
@@ -204,7 +207,7 @@ List<List<VirtualKeyboardKey>> _getKeyboardRowsNumeric() {
 
     // We have to add Action keys to keyboard.
     switch (rowNum) {
-      case 3:
+      case 0:
         // String keys.
         rowKeys.addAll(_getKeyboardRowKeysNumeric(rowNum));
 
@@ -213,6 +216,17 @@ List<List<VirtualKeyboardKey>> _getKeyboardRowsNumeric() {
           VirtualKeyboardKey(
               keyType: VirtualKeyboardKeyType.Action,
               action: VirtualKeyboardKeyAction.Backspace),
+        );
+        break;
+      case 3:
+      // String keys.
+        rowKeys.addAll(_getKeyboardRowKeysNumeric(rowNum));
+
+        // Right Shift
+        rowKeys.add(
+          VirtualKeyboardKey(
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Ok),
         );
         break;
       default:
