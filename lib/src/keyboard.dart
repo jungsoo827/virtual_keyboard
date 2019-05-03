@@ -131,10 +131,14 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
   /// Returns the rows for keyboard.
   List<Widget> _rows() {
     // Get the keyboard Rows
-    List<List<VirtualKeyboardKey>> keyboardRows =
-        type == VirtualKeyboardType.Numeric
-            ? _getKeyboardRowsNumeric()
-            : _getKeyboardRows();
+    List<List<VirtualKeyboardKey>> keyboardRows =[];
+    if (type == VirtualKeyboardType.Numeric){
+      keyboardRows =_getKeyboardRowsNumeric();
+    } else if (type == VirtualKeyboardType.Alphanumeric){
+      keyboardRows =_getKeyboardRows();
+    } else if (type == VirtualKeyboardType.Amount){
+      keyboardRows =_getKeyboardRowsAmount();
+    }
 
     // Generate keyboard row.
     List<Widget> rows = List.generate(keyboardRows.length, (int rowNum) {
@@ -254,6 +258,9 @@ class _VirtualKeyboardState extends State<VirtualKeyboard> {
         break;
       case VirtualKeyboardKeyAction.Ok:
         actionKey = actionKey = Icon(Icons.check, color: textColor);
+        break;
+      case VirtualKeyboardKeyAction.Clear:
+        actionKey = actionKey = Icon(Icons.clear, color: textColor);
         break;
       case VirtualKeyboardKeyAction.Return:
         actionKey = Icon(

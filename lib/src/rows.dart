@@ -75,16 +75,38 @@ const List<List> _keyRowsNumeric = [
     '4',
     '5',
     '6',
-    '-'
   ],
   // Row 1
   const [
     '7',
     '8',
     '9',
-    '+'
   ],
   // Row 1
+  const [
+    '.',
+    '0',
+  ],
+];
+
+
+const List<List> _keyRowsAmount = [
+  const [
+    '1',
+    '2',
+    '3',
+  ],
+  const [
+    '4',
+    '5',
+    '6',
+    '-/+'
+  ],
+  const [
+    '7',
+    '8',
+    '9',
+  ],
   const [
     '000',
     '0',
@@ -107,6 +129,19 @@ List<VirtualKeyboardKey> _getKeyboardRowKeysNumeric(rowNum) {
     );
   });
 }
+
+
+List<VirtualKeyboardKey> _getKeyboardRowKeysAmount(rowNum) {
+  return List.generate(_keyRowsAmount[rowNum].length, (int keyNum) {
+    String key = _keyRowsAmount[rowNum][keyNum];
+    return VirtualKeyboardKey(
+      text: key,
+      capsText: key.toUpperCase(),
+      keyType: VirtualKeyboardKeyType.String,
+    );
+  });
+}
+
 
 /// Returns a list of `VirtualKeyboardKey` objects.
 List<VirtualKeyboardKey> _getKeyboardRowKeys(rowNum) {
@@ -134,35 +169,35 @@ List<List<VirtualKeyboardKey>> _getKeyboardRows() {
     // We have to add Action keys to keyboard.
     switch (rowNum) {
       case 1:
-        // String keys.
+      // String keys.
         rowKeys = _getKeyboardRowKeys(rowNum);
 
         // 'Backspace' button.
         rowKeys.add(
           VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Backspace),
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Backspace),
         );
         break;
       case 2:
-        // String keys.
+      // String keys.
         rowKeys = _getKeyboardRowKeys(rowNum);
 
         // 'Return' button.
         rowKeys.add(
           VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Return,
-              text: '\n',
-              capsText: '\n'),
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Return,
+            text: '\n',
+            capsText: '\n'),
         );
         break;
       case 3:
-        // Left Shift
+      // Left Shift
         rowKeys.add(
           VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Shift),
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Shift),
         );
 
         // String keys.
@@ -171,22 +206,22 @@ List<List<VirtualKeyboardKey>> _getKeyboardRows() {
         // Right Shift
         rowKeys.add(
           VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Shift),
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Shift),
         );
         break;
       case 4:
-        // String keys.
+      // String keys.
         rowKeys = _getKeyboardRowKeys(rowNum);
 
         // Insert the space key into second position of row.
         rowKeys.insert(
           1,
           VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              text: ' ',
-              capsText: ' ',
-              action: VirtualKeyboardKeyAction.Space),
+            keyType: VirtualKeyboardKeyType.Action,
+            text: ' ',
+            capsText: ' ',
+            action: VirtualKeyboardKeyAction.Space),
         );
 
         break;
@@ -207,17 +242,6 @@ List<List<VirtualKeyboardKey>> _getKeyboardRowsNumeric() {
 
     // We have to add Action keys to keyboard.
     switch (rowNum) {
-      case 0:
-        // String keys.
-        rowKeys.addAll(_getKeyboardRowKeysNumeric(rowNum));
-
-        // Right Shift
-        rowKeys.add(
-          VirtualKeyboardKey(
-              keyType: VirtualKeyboardKeyType.Action,
-              action: VirtualKeyboardKeyAction.Backspace),
-        );
-        break;
       case 3:
       // String keys.
         rowKeys.addAll(_getKeyboardRowKeysNumeric(rowNum));
@@ -226,11 +250,48 @@ List<List<VirtualKeyboardKey>> _getKeyboardRowsNumeric() {
         rowKeys.add(
           VirtualKeyboardKey(
             keyType: VirtualKeyboardKeyType.Action,
-            action: VirtualKeyboardKeyAction.Ok),
+            action: VirtualKeyboardKeyAction.Backspace),
         );
         break;
       default:
         rowKeys = _getKeyboardRowKeysNumeric(rowNum);
+    }
+
+    return rowKeys;
+  });
+}
+
+List<List<VirtualKeyboardKey>> _getKeyboardRowsAmount() {
+  return List.generate(_keyRowsNumeric.length, (int rowNum) {
+    List<VirtualKeyboardKey> rowKeys = [];
+
+    switch (rowNum) {
+      case 0:
+        rowKeys.addAll(_getKeyboardRowKeysAmount(rowNum));
+        rowKeys.add(
+          VirtualKeyboardKey(
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Backspace),
+        );
+        break;
+      case 2:
+        rowKeys.addAll(_getKeyboardRowKeysAmount(rowNum));
+        rowKeys.add(
+          VirtualKeyboardKey(
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Clear),
+        );
+        break;
+      case 3:
+        rowKeys.addAll(_getKeyboardRowKeysAmount(rowNum));
+        rowKeys.add(
+          VirtualKeyboardKey(
+            keyType: VirtualKeyboardKeyType.Action,
+            action: VirtualKeyboardKeyAction.Ok),
+        );
+        break;
+      default:
+        rowKeys = _getKeyboardRowKeysAmount(rowNum);
     }
 
     return rowKeys;
